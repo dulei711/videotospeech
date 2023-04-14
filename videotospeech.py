@@ -24,7 +24,7 @@ st.set_page_config(page_title="Video to WordCloud", page_icon=":guardsman:", lay
 st.title("Convert a video to a WordCloud")
 
 # Add a file uploader to the app
-uploaded_file = st.file_uploader("Choose an MP4 video file", type=["mp4", "mov"], max_bytes=3000*1024*1024)
+uploaded_file = st.file_uploader("Choose an MP4 video file", type=["mp4", "mov"], max_size=3000*1024*1024)
 
 # Check if a file has been uploaded
 if uploaded_file is not None:
