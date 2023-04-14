@@ -47,18 +47,17 @@ st.title("Convert your talks into best-sellers!")
 
 # Add a file uploader to the app
 uploaded_file = st.file_uploader("Choose a video file", type=["mp4", "mov"])
-
-# Check if a file has been uploaded
-if uploaded_file is not None:
-    # Use moviepy to extract audio from the video
-    generate_audio(uploaded_file)
-    # Use Google Speech Recognition API to convert audio to text
-    transcribe_audio(audio_file, language)
-    if audio_file is not None:
-            text = transcribe_audio(audio_file, language=language_code)
-            txt = st.text_area('Transcription', text)
+if st.button("Run"):
+    # Check if a file has been uploaded
+    if uploaded_file is not None:
+        # Use moviepy to extract audio from the video
+        generate_audio(uploaded_file)
+        # Use Google Speech Recognition API to convert audio to text
+        transcribe_audio(audio_file, language)
+        if audio_file is not None:
+                text = transcribe_audio(audio_file, language=language_code)
+                txt = st.text_area('Transcription', text)
+        else:
+            st.error('Some error with the audio', icon="🚨")
     else:
-        st.error('Some error with the audio', icon="🚨")
-else:
-    st.error('Some error with the video', icon="🚨")  
-    
+        st.error('Some error with the video', icon="🚨") 
