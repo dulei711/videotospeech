@@ -10,13 +10,7 @@ def generate_audio(uploaded_file):
     audio_file = "temp_audio.wav"
     audio.write_audiofile(audio_file)
     st.success('Vídeo convertido em áudio!', icon="✅")
-    return audio_file
-
-@st.cache_data
-def transcribe_audio(audio_file, language):
-    # Upload an audio file
-    audio_file = st.file_uploader("Upload an audio file", type=["mp3", "wav"])
-    # Select the language of origin
+     # Select the language of origin
     language = st.selectbox("Select the language:", ["English", "French", "German", "Spanish"])
     # Convert the language name to a language code
     if language == "English":
@@ -27,6 +21,10 @@ def transcribe_audio(audio_file, language):
         language_code = "de-DE"
     elif language == "Spanish":
         language_code = "es-ES"
+    return audio_file, language
+
+@st.cache_data
+def transcribe_audio(audio_file, language):
     # Create a new recognizer object
     r = sr.Recognizer()
     # Open the audio file and read its contents into memory
