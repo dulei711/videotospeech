@@ -2,3 +2,4 @@ streamlit
 moviepy
 wordcloud
 matplotlib
+SpeechRecognition
