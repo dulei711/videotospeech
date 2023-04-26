@@ -3,7 +3,4 @@ moviepy
 SpeechRecognition
 pydub
 numpy
-matplotlib
-pathlib
-Pillow
-wordcloud
+os
