@@ -33,7 +33,7 @@ def get_large_audio_transcription(path, lang):
                 whole_text += text
     return whole_text
 
-st.title(VideoToSpeech)
+st.title("VideoToSpeech")
 video_file = st.file_uploader("Choose a file", type=['mov', 'mp4'])
 if video_file is not None:
     lang = st.radio("What's the language?", ('en-US', 'pt-BR'))
