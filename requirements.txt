@@ -7,3 +7,5 @@ matplotlib
 pathlib
 Pillow
 wordcloud
+os
+tempfile
