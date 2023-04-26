@@ -3,4 +3,3 @@ moviepy
 SpeechRecognition
 pydub
 numpy
-os
