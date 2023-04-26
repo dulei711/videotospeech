@@ -11,6 +11,7 @@ from pydub.silence import split_on_silence
 from pathlib import Path
 from PIL import Image
 from wordcloud import WordCloud, STOPWORDS, ImageColorGenerator
+import tempfile
 
 def get_large_audio_transcription(path, lang):
     sound = AudioSegment.from_wav(path)  
@@ -37,17 +38,19 @@ def get_large_audio_transcription(path, lang):
 st.title("VideoToSpeech")
 video_file = st.file_uploader("Choose a file", type=['mov', 'mp4'])
 if video_file is not None:
-    file_name = video_file.name
-    file_extension = file_name.split(".")[-1].lower()
-    if file_extension in ['mov', 'mp4']:
-        lang = st.radio("What's the language?", ('en-US', 'pt-BR'))
-        if lang:
-            if st.button("Run"):
-                clip = mp.VideoFileClip(video_file).subclip(0)
-                clip.audio.write_audiofile("theaudio_part.wav")
-                r = sr.Recognizer()
-                path = "/content/theaudio_part.wav"
-                text = get_large_audio_transcription(path, lang)
-                st.write(text)
-    else:
-        st.write("Invalid file type. Please upload a .mov or .mp4 file.")
+    lang = st.radio("What's the language?", ('en-US', 'pt-BR'))
+    if lang:
+        if st.button("Run"):
+            with open(os.path.join(tempfile.gettempdir(), video_file.name), "wb") as f:
+                f.write(video_file.getbuffer())
+            clip = mp.VideoFileClip(os.path.join(tempfile.gettempdir(), video_file.name))
+            audio = clip.audio
+            audio.write_audiofile("theaudio_part.wav")
+            r = sr.Recognizer()
+            path = "theaudio_part.wav"
+            text = get_large_audio_transcription(path, lang)
+            st.write(text)
+            audio.close()
+            clip.close()
+            os.remove(path)
+            os.remove(os.path.join(tempfile.gettempdir(), video_file.name))
