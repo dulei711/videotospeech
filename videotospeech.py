@@ -37,12 +37,17 @@ def get_large_audio_transcription(path, lang):
 st.title("VideoToSpeech")
 video_file = st.file_uploader("Choose a file", type=['mov', 'mp4'])
 if video_file is not None:
-    lang = st.radio("What's the language?", ('en-US', 'pt-BR'))
-    if lang:
-        if st.button("Run"):
-            clip = mp.VideoFileClip(video_file).subclip(0)
-            clip.audio.write_audiofile("theaudio_part.wav")
-            r = sr.Recognizer()
-            path = "/content/theaudio_part.wav"
-            text = get_large_audio_transcription(path, lang)
-            st.write(text)
+    file_name = video_file.name
+    file_extension = file_name.split(".")[-1].lower()
+    if file_extension in ['mov', 'mp4']:
+        lang = st.radio("What's the language?", ('en-US', 'pt-BR'))
+        if lang:
+            if st.button("Run"):
+                clip = mp.VideoFileClip(video_file).subclip(0)
+                clip.audio.write_audiofile("theaudio_part.wav")
+                r = sr.Recognizer()
+                path = "/content/theaudio_part.wav"
+                text = get_large_audio_transcription(path, lang)
+                st.write(text)
+    else:
+        st.write("Invalid file type. Please upload a .mov or .mp4 file.")
