@@ -1,5 +1,9 @@
 streamlit
 moviepy
-wordcloud
-matplotlib
 SpeechRecognition
+pydub
+numpy
+matplotlib
+pathlib
+Pillow
+wordcloud
